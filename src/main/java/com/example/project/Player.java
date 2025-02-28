@@ -27,17 +27,49 @@ public class Player{
             allCards.add(communityCards.get(i));
         }
         sortCards();
-        ArrayList<Integer> temp1 = new ArrayList<Integer>();
-        ArrayList<String> temp2 = new ArrayList<String>();
-        for(int j = 0; j < 5; j++) {
-            temp1.add(Utility.getRankValue(allCards.get(j).getRank()));
-            temp2.add(allCards.get(j).getSuit());
-        }   
-        int count = 0;
-        for(int temp: temp1) {
+    }
+
+    private boolean isRoyalFlush() {
+
+    }
+
+    private boolean isStraightFlush() {
+
+    }
+
+    private boolean isFourOfAKind() {
+
+    }
+
+    private boolean isFullHouse() {
+
+    }
+
+    private boolean isFlush() {
+
+    }
+
+    private boolean isStraight() {
+
+    }
+
+    private boolean isThreeOfAKind() {
+
+    }
+
+    private boolean isTwoPair() {
+
+    }
+
+    private boolean isOnePair() {
+
+    }
+
+    private String findHighCard() {
+        sortAllCards();
+        if(hand.contains(allCards.get(4))) {
 
         }
-        return "Nothing";
     }
 
     public void SortAllCards(){
