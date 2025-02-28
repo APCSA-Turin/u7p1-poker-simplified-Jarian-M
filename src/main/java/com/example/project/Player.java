@@ -1,5 +1,6 @@
 package com.example.project;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 
 
@@ -44,17 +45,37 @@ public class Player{
     } 
 
     public ArrayList<Integer> findRankingFrequency(){
-        ArrayList<Integer> freq = new ArrayList<Integer>(13);
+        ArrayList<Integer> freq = new ArrayList<Integer>(Collections.nCopies(13, 0));
+        ArrayList<String> temp = Arrays.aslist(ranks);
         SortAllCards();
-        int count = 0;
-        for(int i = 0; i < freq.size(); i++) {
-            if()
+        int count = 1;
+        for(int i = 0; i < allCards.size(); i++) {
+            if(Utility.getRankValue(allCards.get(i)) == Utility.getRankValue(allCards.get(i + 1))) {
+                count++;
+            } else {
+                int ind = temp.indexOf(allCards.get(i).getRank());
+                freq.add(ind, count);
+                count = 1;
+            }
         }
-        return new ArrayList<>(); 
+        return freq; 
     }
 
     public ArrayList<Integer> findSuitFrequency(){
-        return new ArrayList<>(); 
+        ArrayList<Integer> freq = new ArrayList<Integer>(Collections.nCopies(4, 0));
+        ArrayList<String> temp = Arrays.aslist(suits);
+        SortAllCards();
+        int count = 1;
+        for(int i = 0; i < allCards.size(); i++) {
+            if(allCards.get(i).getSuit().equals(allCards.get(i + 1).getSuit())) {
+                count++;
+            } else {
+                int ind = temp.indexOf(allCards.get(i).getSuit());
+                freq.add(ind, count);
+                count = 1;
+            }
+        }
+        return freq;
     }
 
    
