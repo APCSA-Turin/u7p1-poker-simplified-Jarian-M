@@ -46,6 +46,10 @@ public class Player{
     public ArrayList<Integer> findRankingFrequency(){
         ArrayList<Integer> freq = new ArrayList<Integer>(13);
         SortAllCards();
+        int count = 0;
+        for(int i = 0; i < freq.size(); i++) {
+            if()
+        }
         return new ArrayList<>(); 
     }
 
