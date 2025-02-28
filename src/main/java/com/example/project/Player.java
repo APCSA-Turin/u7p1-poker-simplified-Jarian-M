@@ -50,26 +50,51 @@ public class Player{
     }
 
     private boolean isStraight() {
-
+        int count = 1;
+        for(int i = 0; i < allCards.size() - 1; i++) {
+            if(allCards.get(i).getRank() == allCards.get(i + 1).getRank()) {
+                count++;
+            }
+        }
+        if(count == 5) {
+            return true;
+        }
+        return false;
     }
 
     private boolean isThreeOfAKind() {
-
+        if(findRankingFrequency().contains(3)) {
+            return true;
+        }
+        return false;
     }
 
     private boolean isTwoPair() {
-
+        int count = 0;
+        for(int i = 0; i < allCards.size() - 1; i++) {
+            if(allCards.get(i).getRank() == allCards.get(i + 1).getRank()) {
+                count++;
+            }
+        }
+        if(count == 2) {
+            return true;
+        }
+        return false;
     }
 
     private boolean isOnePair() {
-
+        if(findRankingFrequency().contains(2)) {
+            return true;
+        }
+        return false;
     }
 
-    private String findHighCard() {
+    private boolean isHighCard() {
         sortAllCards();
         if(hand.contains(allCards.get(4))) {
-
+            return true;
         }
+        return false;
     }
 
     public void SortAllCards(){
