@@ -1,6 +1,7 @@
 package com.example.project;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 
 
@@ -26,31 +27,64 @@ public class Player{
         for(int i = 0; i < 3; i++) {
             allCards.add(communityCards.get(i));
         }
-        sortCards();
+        SortAllCards();
+        if(isRoyalFlush()) return "Royal Flush";
+        if(isStraightFlush())return "Straight Flush";
+        if(isFourOfAKind()) return "Four of a Kind";
+        if(isFullHouse()) return "Full House";
+        if(isFlush()) return "Flush";
+        if(isStraight()) return "Straight";
+        if(isThreeOfAKind()) return "Three of a Kind";
+        if(isTwoPair()) return "Two Pair";
+        if(isOnePair()) return "A Pair";
+        if(isHighCard()) {
+            return "High Card";
+        } else {
+            return "Nothing";
+        }
     }
 
     private boolean isRoyalFlush() {
-
+        SortAllCards();
+        if(isStraightFlush() && allCards.get(4).getRank().equals("A")) {
+            return true;
+        }
+        return false;
     }
 
     private boolean isStraightFlush() {
-
+        if(isStraight() && isFlush()) {
+            return true;
+        }
+        return false;
     }
 
     private boolean isFourOfAKind() {
-
+        if(findRankingFrequency().contains(4)) {
+            return true;
+        }
+        return false;
     }
 
     private boolean isFullHouse() {
-
+        if(isThreeOfAKind() && isOnePair()) {
+            return true;
+        }
+        return false;
     }
 
     private boolean isFlush() {
-
+        boolean sameSuit = true;
+        for(int i = 0; i < allCards.size() - 1; i++) {
+            if(allCards.get(i).getSuit() != allCards.get(i + 1).getSuit()) {
+                sameSuit = false;
+            }
+        }
+        return sameSuit;
     }
 
     private boolean isStraight() {
-        int count = 1;
+        int count = 0;
         for(int i = 0; i < allCards.size() - 1; i++) {
             if(allCards.get(i).getRank() == allCards.get(i + 1).getRank()) {
                 count++;
@@ -90,7 +124,7 @@ public class Player{
     }
 
     private boolean isHighCard() {
-        sortAllCards();
+        SortAllCards();
         if(hand.contains(allCards.get(4))) {
             return true;
         }
@@ -98,19 +132,31 @@ public class Player{
     }
 
     public void SortAllCards(){
-        allCards.sort(Comparator.comparingInt(eachCard -> Utility.getRankValue(eachCard.getRank())));
+        //allCards.sort(Comparator.comparingInt(eachCard -> Utility.getRankValue(eachCard.getRank())));
+        for(int i = 1; i < allCards.size(); i++) {
+            int count = i;
+            while(count > 0 && Utility.getRankValue(allCards.get(i).getRank()) < Utility.getRankValue(allCards.get(i - 1).getRank())) {
+                Card temp = allCards.get(count);
+                allCards.set(count, allCards.get(count - 1));
+                allCards.set(count - 1, temp);
+                count--;
+            }
+        }
     } 
 
     public ArrayList<Integer> findRankingFrequency(){
-        ArrayList<Integer> freq = new ArrayList<Integer>(Collections.nCopies(13, 0));
-        ArrayList<String> temp = Arrays.aslist(ranks);
         SortAllCards();
+        ArrayList<Integer> freq = new ArrayList<Integer>(Collections.nCopies(13, 0));
+        ArrayList<String> tempRank = new ArrayList<>();
+        for(Card card: allCards) {
+            tempRank.add(card.getRank());
+        }
         int count = 1;
         for(int i = 0; i < allCards.size(); i++) {
-            if(Utility.getRankValue(allCards.get(i)) == Utility.getRankValue(allCards.get(i + 1))) {
+            if(Utility.getRankValue(allCards.get(i).getRank()) == Utility.getRankValue(allCards.get(i + 1).getRank())) {
                 count++;
             } else {
-                int ind = temp.indexOf(allCards.get(i).getRank());
+                int ind = tempRank.indexOf(allCards.get(i).getRank());
                 freq.add(ind, count);
                 count = 1;
             }
@@ -119,15 +165,18 @@ public class Player{
     }
 
     public ArrayList<Integer> findSuitFrequency(){
-        ArrayList<Integer> freq = new ArrayList<Integer>(Collections.nCopies(4, 0));
-        ArrayList<String> temp = Arrays.aslist(suits);
         SortAllCards();
+        ArrayList<Integer> freq = new ArrayList<Integer>(Collections.nCopies(4, 0));
+        ArrayList<String> tempSuit = new ArrayList<>();
+        for(Card card: allCards) {
+            tempSuit.add(card.getSuit());
+        }
         int count = 1;
         for(int i = 0; i < allCards.size(); i++) {
             if(allCards.get(i).getSuit().equals(allCards.get(i + 1).getSuit())) {
                 count++;
             } else {
-                int ind = temp.indexOf(allCards.get(i).getSuit());
+                int ind = tempSuit.indexOf(allCards.get(i).getSuit());
                 freq.add(ind, count);
                 count = 1;
             }

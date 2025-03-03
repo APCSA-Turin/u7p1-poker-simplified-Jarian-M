@@ -4,7 +4,28 @@ import java.util.ArrayList;
 
 public class Game{
     public static String determineWinner(Player p1, Player p2,String p1Hand, String p2Hand,ArrayList<Card> communityCards){
-        return "Error";
+        int p1Rank = Utility.getHandRanking(p1Hand);
+        int p2Rank = Utility.getHandRanking(p2Hand);
+        if(p1Rank > p2Rank) {
+            return "Player 1 Wins!";
+        } else if(p2Rank > p1Rank) {
+            return "Player 2 Wins!";
+        } else {
+            p1.SortAllCards();
+            p2.SortAllCards();
+            for(int i = p1.getAllCards().size() - 1; i >= 0; i--) {
+                int p1CardRank = Utility.getRankValue(p1.getAllCards().get(i).getRank());
+                int p2CardRank = Utility.getRankValue(p2.getAllCards().get(i).getRank());
+                if(p1CardRank > p2CardRank) {
+                    return "Player 1 Wins!";
+                }
+                if(p2CardRank > p1CardRank) {
+                    return "Player 2 Wins!";
+                }
+            }
+            return "Tie!";
+        }
+        //return "Error";
     }
 
     public static void play(){ //simulate card playing
