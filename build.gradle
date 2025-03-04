@@ -17,3 +17,7 @@ test {
 		exceptionFormat "full"  // Show full exception details on failure
 	}
 }
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
