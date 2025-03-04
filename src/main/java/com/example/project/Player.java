@@ -60,7 +60,7 @@ public class Player{
     }
 
     private boolean isFourOfAKind() {
-        if(findRankingFrequency().contains(4)) {
+        if(doesContain(findRankingFrequency(), 2)) {
             return true;
         }
         return false;
@@ -97,7 +97,7 @@ public class Player{
     }
 
     private boolean isThreeOfAKind() {
-        if(findRankingFrequency().contains(3)) {
+        if(doesContain(findRankingFrequency(), 2)) {
             return true;
         }
         return false;
@@ -117,7 +117,7 @@ public class Player{
     }
 
     private boolean isOnePair() {
-        if(findRankingFrequency().contains(2)) {
+        if(doesContain(findRankingFrequency(), 2)) {
             return true;
         }
         return false;
@@ -125,8 +125,10 @@ public class Player{
 
     private boolean isHighCard() {
         SortAllCards();
-        if(hand.contains(allCards.get(4))) {
-            return true;
+        for(int i = 0; i < hand.size(); i++) {
+            if(hand.get(i) == allCards.get(4)) {
+                return true;
+            }
         }
         return false;
     }
@@ -143,6 +145,15 @@ public class Player{
             }
         }
     } 
+
+    public boolean doesContain(ArrayList<Integer> temp, int look) {
+        for(int i = 0; i < temp.size(); i++) {
+            if(temp.get(i) == look) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     public ArrayList<Integer> findRankingFrequency(){
         SortAllCards();
