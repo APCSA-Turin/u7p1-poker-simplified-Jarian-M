@@ -2,7 +2,6 @@ package com.example.project;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Comparator;
 
 
 public class Player{
@@ -13,6 +12,7 @@ public class Player{
     
     public Player(){
         hand = new ArrayList<>();
+        allCards = new ArrayList<>();
     }
 
     public ArrayList<Card> getHand(){return hand;}
@@ -60,8 +60,10 @@ public class Player{
     }
 
     private boolean isFourOfAKind() {
-        if(doesContain(findRankingFrequency(), 2)) {
-            return true;
+        for(int i = 0; i < findRankingFrequency().size(); i++) {
+            if(findRankingFrequency().get(i) == 4) {
+                return true;
+            }
         }
         return false;
     }
@@ -158,19 +160,14 @@ public class Player{
     public ArrayList<Integer> findRankingFrequency(){
         SortAllCards();
         ArrayList<Integer> freq = new ArrayList<Integer>(Collections.nCopies(13, 0));
-        ArrayList<String> tempRank = new ArrayList<>();
+        
         for(Card card: allCards) {
-            tempRank.add(card.getRank());
-        }
-        int count = 1;
-        for(int i = 0; i < allCards.size(); i++) {
-            if(Utility.getRankValue(allCards.get(i).getRank()) == Utility.getRankValue(allCards.get(i + 1).getRank())) {
-                count++;
-            } else {
-                int ind = tempRank.indexOf(allCards.get(i).getRank());
-                freq.add(ind, count);
-                count = 1;
-            }
+            int rankVal = Utility.getRankValue(card.getRank());
+
+            if(rankVal >= 2 && rankVal <= 14) {
+                int fixedRank = rankVal - 2;
+                freq.set(fixedRank, freq.get(fixedRank) + 1);
+            } 
         }
         return freq; 
     }
@@ -178,19 +175,10 @@ public class Player{
     public ArrayList<Integer> findSuitFrequency(){
         SortAllCards();
         ArrayList<Integer> freq = new ArrayList<Integer>(Collections.nCopies(4, 0));
-        ArrayList<String> tempSuit = new ArrayList<>();
+        
         for(Card card: allCards) {
-            tempSuit.add(card.getSuit());
-        }
-        int count = 1;
-        for(int i = 0; i < allCards.size(); i++) {
-            if(allCards.get(i).getSuit().equals(allCards.get(i + 1).getSuit())) {
-                count++;
-            } else {
-                int ind = tempSuit.indexOf(allCards.get(i).getSuit());
-                freq.add(ind, count);
-                count = 1;
-            }
+            int suitInd = Arrays.asList(suits).indexOf(card.getSuit());
+            freq.set(suitInd, freq.get(suitInd) + 1);
         }
         return freq;
     }

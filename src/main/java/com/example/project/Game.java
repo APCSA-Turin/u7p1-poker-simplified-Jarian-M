@@ -1,4 +1,6 @@
 package com.example.project;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.ArrayList;
 
 
@@ -29,7 +31,23 @@ public class Game{
     }
 
     public static void play(){ //simulate card playing
-    
+        Player player = new Player();
+        player.addCard(new Card("A", "♠"));
+        player.addCard(new Card("6", "♦"));
+        
+        // Community Cards
+        ArrayList<Card> communityCards = new ArrayList<>();
+        communityCards.add(new Card("5", "♣"));
+        communityCards.add(new Card("2", "♠"));
+        communityCards.add(new Card("3", "♠"));
+        
+        player.playHand(communityCards);
+        String handResult = player.playHand(communityCards);
+        determineWinner(player, player, handResult, handResult, communityCards);
+    }
+
+    public static void main(String[] args) {
+        play();
     }
         
         
