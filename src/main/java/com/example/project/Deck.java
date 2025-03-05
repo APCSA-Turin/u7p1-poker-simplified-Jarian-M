@@ -27,10 +27,22 @@ public class Deck{
         Collections.shuffle(cards);
     }
 
-    public  Card drawCard(){
+    public Card drawCard(){
         Card draw = cards.get(0);
         cards.remove(0);
         return draw;
+    }
+
+    public void printCard(Card cardDrawn) {
+        String printCard = "";
+        printCard += "┌──────────┐\n";
+        printCard += "|  " + cardDrawn.getRank() + "   " + cardDrawn.getSuit() + "\n";
+        printCard += "|          |\n";
+        printCard += "|    J     |\n";
+        printCard += "|          |\n";
+        printCard += "|  " + cardDrawn.getSuit() + "   " + cardDrawn.getRank() + "\n";
+        printCard += "└──────────┘\n";
+        System.out.println(printCard);
     }
 
     public  boolean isEmpty(){

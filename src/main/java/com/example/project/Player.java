@@ -93,7 +93,6 @@ public class Player{
                 count++;
             }
         }
-        System.out.println(count);
         if(count == 5) {
             return true;
         }
@@ -169,7 +168,6 @@ public class Player{
             if(rankVal >= 2 && rankVal <= 14) {
                 int fixedRank = rankVal - 2;
                 freq.set(fixedRank, freq.get(fixedRank) + 1);
-                System.out.println(freq);
             } 
         }
         return freq; 

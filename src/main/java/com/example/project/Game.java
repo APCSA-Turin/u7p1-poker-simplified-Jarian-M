@@ -1,5 +1,6 @@
 package com.example.project;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 
 public class Game{
@@ -29,22 +30,56 @@ public class Game{
     }
 
     public static void play(){ //simulate card playing
+        Scanner scan = new Scanner(System.in);
         Player player = new Player();
-        player.addCard(new Card("10", "♠"));
-        player.addCard(new Card("J", "♦"));
+        Deck deck = new Deck();
+        int cardCount = 0;
+        while(cardCount < 2) {
+            System.out.println("Please Draw a Card! Type \"draw\" to Draw a Card:");
+            String draw = scan.nextLine();
+            if(draw.equals("draw") && cardCount < 2) {
+                player.addCard(deck.drawCard());
+                cardCount++;
+            } else {
+                System.out.println("Please Type \\\"draw\\\" to Draw a Card:");
+            }
+        }
+        System.out.println();
+        System.out.println("Player Hand:\n");
+        deck.printCard(player.getHand().get(0));
+        deck.printCard(player.getHand().get(1));  
+        
+        System.out.println();
+        System.out.println("CPU Hand:\n");
+        Player cpu = new Player();
+        cpu.addCard(deck.drawCard());
+        deck.printCard(cpu.getHand().get(0));
+        cpu.addCard(deck.drawCard());
+        deck.printCard(cpu.getHand().get(1));
 
         ArrayList<Card> communityCards = new ArrayList<>();
-        communityCards.add(new Card("9", "♣"));
-        communityCards.add(new Card("Q", "♥"));
-        communityCards.add(new Card("8", "♠"));
+        communityCards.add(deck.drawCard());
+        System.out.println("Community Cards: ");
+        deck.printCard(communityCards.get(0));
+        communityCards.add(deck.drawCard());
+        deck.printCard(communityCards.get(1));
+        communityCards.add(deck.drawCard());
+        deck.printCard(communityCards.get(2));
         
-        String handResult = player.playHand(communityCards);
-        
-        System.out.println(player.getAllCards());
-        System.out.println(handResult);
+        String handResult1 = player.playHand(communityCards);
+        String handResult2 = cpu.playHand(communityCards);
+        System.out.println("Type \"reveal\" to Reveal who win the hand!");
+        String reveal = scan.nextLine();
+        System.out.println(determineWinner(player, cpu, handResult1, handResult2, communityCards));  
+        System.out.println("Would you like to try again? Type \"again\" if you do!");
+        String again = scan.nextLine();      
+        while(again.equals("again")) {
+            play();
+        }
     }
 
     public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
         play();
     }
         
