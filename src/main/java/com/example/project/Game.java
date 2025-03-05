@@ -1,6 +1,4 @@
 package com.example.project;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import java.util.ArrayList;
 
 
@@ -9,9 +7,9 @@ public class Game{
         int p1Rank = Utility.getHandRanking(p1Hand);
         int p2Rank = Utility.getHandRanking(p2Hand);
         if(p1Rank > p2Rank) {
-            return "Player 1 Wins!";
+            return "Player 1 wins!";
         } else if(p2Rank > p1Rank) {
-            return "Player 2 Wins!";
+            return "Player 2 wins!";
         } else {
             p1.SortAllCards();
             p2.SortAllCards();
@@ -19,10 +17,10 @@ public class Game{
                 int p1CardRank = Utility.getRankValue(p1.getAllCards().get(i).getRank());
                 int p2CardRank = Utility.getRankValue(p2.getAllCards().get(i).getRank());
                 if(p1CardRank > p2CardRank) {
-                    return "Player 1 Wins!";
+                    return "Player 1 wins!";
                 }
                 if(p2CardRank > p1CardRank) {
-                    return "Player 2 Wins!";
+                    return "Player 2 wins!";
                 }
             }
             return "Tie!";
@@ -32,18 +30,18 @@ public class Game{
 
     public static void play(){ //simulate card playing
         Player player = new Player();
-        player.addCard(new Card("A", "♠"));
-        player.addCard(new Card("6", "♦"));
-        
-        // Community Cards
+        player.addCard(new Card("10", "♠"));
+        player.addCard(new Card("J", "♦"));
+
         ArrayList<Card> communityCards = new ArrayList<>();
-        communityCards.add(new Card("5", "♣"));
-        communityCards.add(new Card("2", "♠"));
-        communityCards.add(new Card("3", "♠"));
+        communityCards.add(new Card("9", "♣"));
+        communityCards.add(new Card("Q", "♥"));
+        communityCards.add(new Card("8", "♠"));
         
-        player.playHand(communityCards);
         String handResult = player.playHand(communityCards);
-        determineWinner(player, player, handResult, handResult, communityCards);
+        
+        System.out.println(player.getAllCards());
+        System.out.println(handResult);
     }
 
     public static void main(String[] args) {

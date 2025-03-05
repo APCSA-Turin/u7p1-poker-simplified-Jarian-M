@@ -20,10 +20,10 @@ public class Player{
 
     public void addCard(Card c){
         hand.add(c);
-        allCards.add(c);
     }
 
-    public String playHand(ArrayList<Card> communityCards){   
+    public String playHand(ArrayList<Card> communityCards){ 
+        allCards = new ArrayList<>(hand);
         for(int i = 0; i < 3; i++) {
             allCards.add(communityCards.get(i));
         }
@@ -32,7 +32,7 @@ public class Player{
         if(isStraightFlush())return "Straight Flush";
         if(isFourOfAKind()) return "Four of a Kind";
         if(isFullHouse()) return "Full House";
-        if(isFlush()) return "Flush";
+        if(isFlush() && !isStraight()) return "Flush";
         if(isStraight()) return "Straight";
         if(isThreeOfAKind()) return "Three of a Kind";
         if(isTwoPair()) return "Two Pair";
@@ -86,12 +86,14 @@ public class Player{
     }
 
     private boolean isStraight() {
-        int count = 0;
+        SortAllCards();
+        int count = 1;
         for(int i = 0; i < allCards.size() - 1; i++) {
-            if(allCards.get(i).getRank() == allCards.get(i + 1).getRank()) {
+            if(Utility.getRankValue(allCards.get(i).getRank()) == Utility.getRankValue(allCards.get(i + 1).getRank()) - 1) {
                 count++;
             }
         }
+        System.out.println(count);
         if(count == 5) {
             return true;
         }
@@ -99,7 +101,7 @@ public class Player{
     }
 
     private boolean isThreeOfAKind() {
-        if(doesContain(findRankingFrequency(), 2)) {
+        if(doesContain(findRankingFrequency(), 3)) {
             return true;
         }
         return false;
@@ -158,7 +160,7 @@ public class Player{
     }
 
     public ArrayList<Integer> findRankingFrequency(){
-        SortAllCards();
+        //SortAllCards();
         ArrayList<Integer> freq = new ArrayList<Integer>(Collections.nCopies(13, 0));
         
         for(Card card: allCards) {
@@ -167,6 +169,7 @@ public class Player{
             if(rankVal >= 2 && rankVal <= 14) {
                 int fixedRank = rankVal - 2;
                 freq.set(fixedRank, freq.get(fixedRank) + 1);
+                System.out.println(freq);
             } 
         }
         return freq; 
