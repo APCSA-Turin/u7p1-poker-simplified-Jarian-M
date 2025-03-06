@@ -34,14 +34,15 @@ public class Game{
         Player player = new Player();
         Deck deck = new Deck();
         int cardCount = 0;
+        System.out.println("Please Draw Your Cards! Type \"draw\" to Draw your Cards:");
+        String draw = scan.nextLine();
         while(cardCount < 2) {
-            System.out.println("Please Draw a Card! Type \"draw\" to Draw a Card:");
-            String draw = scan.nextLine();
             if(draw.equals("draw") && cardCount < 2) {
                 player.addCard(deck.drawCard());
                 cardCount++;
             } else {
-                System.out.println("Please Type \\\"draw\\\" to Draw a Card:");
+                System.out.println("Please Type \"draw\" to Draw Your Cards:");
+                draw = scan.nextLine();
             }
         }
         System.out.println();
@@ -68,21 +69,38 @@ public class Game{
         
         String handResult1 = player.playHand(communityCards);
         String handResult2 = cpu.playHand(communityCards);
-        System.out.println("Type \"reveal\" to Reveal who win the hand!");
+        System.out.println("Type \"reveal\" to Reveal who won the hand!");
         String reveal = scan.nextLine();
-        System.out.println(determineWinner(player, cpu, handResult1, handResult2, communityCards));  
-        System.out.println("Would you like to try again? Type \"again\" if you do!");
-        String again = scan.nextLine();      
-        while(again.equals("again")) {
-            play();
+        while(!reveal.equals("reveal")) {
+            System.out.println("Please Type \"reveal\" to Reveal who won the hand!");
+            reveal = scan.nextLine();
         }
+        if(reveal.equals("reveal")) {
+            System.out.println(determineWinner(player, cpu, handResult1, handResult2, communityCards));
+        }  
     }
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         play();
+        System.out.println("Would you like to try again? Type \"again\" if you do! If you don't, type \"stop\"");
+        String again = scanner.nextLine();      
+        while(!again.equals("again") && !again.equals("stop")) {
+            System.out.println("Please Type \"again\" or Type \"stop\"");
+            again = scanner.nextLine(); 
+        }
+        while(again.equals("again")) {
+            play();
+            System.out.println("Would you like to try again? Type \"again\" if you do! If you don't, type \"stop\"");
+            again = scanner.nextLine(); 
+            while(!again.equals("again") && !again.equals("stop")) {
+                System.out.println("Please Type \"again\" or Type \"stop\"");
+                again = scanner.nextLine(); 
+            }
+            if(again.equals("stop")) {
+                break;
+            } 
+        }
+        scanner.close();
     }
-        
-        
-
 }
