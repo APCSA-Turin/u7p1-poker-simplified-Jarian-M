@@ -2,7 +2,7 @@ package com.example.project;
 import java.util.ArrayList;
 
 public class Utility{
-    private static String[] hands = {
+    private static String[] hands = { //instance variable Array hands
         "Royal Flush",
         "Straight Flush",
         "Four of a Kind",
@@ -15,13 +15,13 @@ public class Utility{
         "High Card"
     };
 
-    private static String[] suits  = {"♠","♥","♣", "♦"};
-    private static String[] ranks = {"2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"};
+    private static String[] suits  = {"♠","♥","♣", "♦"}; //instance variable Array suits, which represents the suits of playing cards
+    private static String[] ranks = {"2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"}; //instance variable Array ranks, which represents the ranks of playing cards (2-"A")
 
-    public static String[] getRanks(){return ranks;}
-    public static String[] getSuits(){return suits;}
+    public static String[] getRanks(){return ranks;} //returns ranks
+    public static String[] getSuits(){return suits;} //returns suits
 
-    public static int getRankValue(String rank){
+    public static int getRankValue(String rank){ //gets and returns the value of each rank from the Array ranks (2-A), from 2 to 14
         switch(rank){
             case "2": return 2;
             case "3": return 3;
@@ -40,7 +40,7 @@ public class Utility{
         return -1;
     }
 
-    public static int getHandRanking(String result){
+    public static int getHandRanking(String result){ //gets and returns the value of each possible hand, from the lowest ranking (Nothing) which returns 1, to the highest ranking (Royal Flush) which returns 11
         switch(result){
             case "Royal Flush": return 11;
             case "Straight Flush": return 10;
